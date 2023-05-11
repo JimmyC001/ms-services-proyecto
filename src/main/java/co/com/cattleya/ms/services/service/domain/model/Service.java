@@ -1,4 +1,4 @@
-package co.com.cattleya.ms.services.service.entity;
+package co.com.cattleya.ms.services.service.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "type")
 public abstract class Service {
     @Id
