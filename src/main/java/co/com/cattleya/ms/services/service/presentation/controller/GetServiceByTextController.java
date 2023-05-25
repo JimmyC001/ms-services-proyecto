@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("service")
+@RequestMapping("ws/service")
 public class GetServiceByTextController {
     private final ServiceService service;
     @Autowired
     public GetServiceByTextController(ServiceService service){
         this.service = service;
     }
-    @PatchMapping
+    @PostMapping
     public ResponseEntity<List<Service>> getFromText(@RequestBody GetFromTextRequest request){
         if(request == null)
             return ResponseEntity.badRequest().build();

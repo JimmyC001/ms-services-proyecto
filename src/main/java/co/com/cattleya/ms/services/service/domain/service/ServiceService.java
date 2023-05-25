@@ -66,7 +66,7 @@ public class ServiceService {
     private boolean validateText(co.com.cattleya.ms.services.service.domain.model.Service service, String text){
         if(text.isEmpty())
             return true;
-        return service.getName().contains(text) || service.getDescription().contains(text);
+        return service.getName().toUpperCase().contains(text.toUpperCase()) || service.getDescription().toUpperCase().contains(text.toUpperCase());
     }
 
     public List<co.com.cattleya.ms.services.service.domain.model.Service> getFromText(String text){
