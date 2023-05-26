@@ -1,6 +1,6 @@
 package co.com.cattleya.ms.services.service.domain.model;
-
 import co.com.cattleya.ms.services.question.domain.model.Question;
+import co.com.cattleya.ms.services.service.infrastructure.persistence.api.CountryService;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,4 +26,5 @@ public abstract class Service {
     private Long providerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "service")
     private List<Question> questions;
+
 }

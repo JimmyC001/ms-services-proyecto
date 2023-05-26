@@ -1,6 +1,8 @@
 package co.com.cattleya.ms.services.service.domain.service;
 
+import co.com.cattleya.ms.services.service.domain.model.CountryInfo;
 import co.com.cattleya.ms.services.service.domain.repository.ServiceRepository;
+import co.com.cattleya.ms.services.service.infrastructure.persistence.CountryServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,15 +12,21 @@ import java.util.List;
 @Service
 public class ServiceService {
     private final ServiceRepository repository;
+    private final CountryServiceAPI repositoyAPI;
 
     @Autowired
-    public ServiceService(ServiceRepository repository) {
+    public ServiceService(ServiceRepository repository, CountryServiceAPI repositoyAPI) {
         this.repository = repository;
+        this.repositoyAPI = repositoyAPI;
     }
 
+    public CountryInfo getCountry(String countryName) throws Exception {
+        return repositoyAPI.getCountryInfo(countryName);
+    }
     public co.com.cattleya.ms.services.service.domain.model.Service findById(Long id) {
         return repository.findById(id).orElse(null);
     }
+
 
     public co.com.cattleya.ms.services.service.domain.model.Service saveService(co.com.cattleya.ms.services.service.domain.model.Service service) {
         co.com.cattleya.ms.services.service.domain.model.Service dbService = repository.findByName(service.getName());
@@ -30,6 +38,7 @@ public class ServiceService {
     public List<co.com.cattleya.ms.services.service.domain.model.Service> getAllServices() {
         return repository.findAll();
     }
+
 
     public List<co.com.cattleya.ms.services.service.domain.model.Service> getAllByProviderId(Long id) {
         return repository.findAllByProviderId(id);
@@ -82,4 +91,6 @@ public class ServiceService {
         repository.delete(service);
         return service;
     }
+
+
 }
