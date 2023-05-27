@@ -1,8 +1,10 @@
 package co.com.cattleya.ms.services.service.domain.service;
 
 import co.com.cattleya.ms.services.service.domain.model.CountryInfo;
+import co.com.cattleya.ms.services.service.domain.model.MapsInfo;
 import co.com.cattleya.ms.services.service.domain.repository.ServiceRepository;
 import co.com.cattleya.ms.services.service.infrastructure.persistence.CountryServiceAPI;
+import co.com.cattleya.ms.services.service.infrastructure.persistence.MapsServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +14,23 @@ import java.util.List;
 @Service
 public class ServiceService {
     private final ServiceRepository repository;
-    private final CountryServiceAPI repositoyAPI;
+    private final CountryServiceAPI repositoryCountry;
+    private final MapsServiceAPI repositoryMaps;
 
     @Autowired
-    public ServiceService(ServiceRepository repository, CountryServiceAPI repositoyAPI) {
+    public ServiceService(ServiceRepository repository, CountryServiceAPI repositoryCountry, MapsServiceAPI repositoryMaps) {
         this.repository = repository;
-        this.repositoyAPI = repositoyAPI;
+        this.repositoryCountry = repositoryCountry;
+        this.repositoryMaps = repositoryMaps;
     }
 
     public CountryInfo getCountry(String countryName) throws Exception {
-        return repositoyAPI.getCountryInfo(countryName);
+        return repositoryCountry.getCountryInfo(countryName);
     }
+    public MapsInfo getMaps( String destination) throws Exception {
+        return repositoryMaps.getMapsRout( destination);
+    }
+
     public co.com.cattleya.ms.services.service.domain.model.Service findById(Long id) {
         return repository.findById(id).orElse(null);
     }
@@ -91,6 +99,7 @@ public class ServiceService {
         repository.delete(service);
         return service;
     }
+
 
 
 }

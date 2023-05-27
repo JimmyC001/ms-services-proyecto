@@ -14,4 +14,5 @@ import lombok.*;
 public class Hosting extends Service{
     private String place;
     private Integer days;
+    private String country;
 }

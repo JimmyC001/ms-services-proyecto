@@ -34,7 +34,7 @@ public class RatingService {
     }
 
     public Rating deleteRating(Long id){
-        Rating dbRating = repository.findById(id).orElse(null);
+        Rating dbRating = repository.findByUserid(id).orElse(null);
         if (dbRating == null)
             return null;
         repository.delete(dbRating);
