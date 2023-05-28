@@ -30,7 +30,7 @@ public class PostServiceMapper {
                         .build();
             }
             case "TRANSPORT" -> {
-                if (validateFields(request, "company", "vehicle", "idVehicle", "origin", "destination"))
+                if (validateFields(request, "company", "vehicle", "idVehicle", "origin", "destination","departure", "coming"))
                     return null;
                 service = Transport.builder()
                         .company(String.valueOf(request.getVariables().get("company")))
@@ -38,6 +38,8 @@ public class PostServiceMapper {
                         .idVehicle(String.valueOf(request.getVariables().get("idVehicle")))
                         .origin(String.valueOf(request.getVariables().get("origin")))
                         .destination(String.valueOf(request.getVariables().get("destination")))
+                        .departure(String.valueOf(request.getVariables().get("departure")))
+                        .coming(String.valueOf(request.getVariables().get("coming")))
                         .build();
             }
             case "FOOD" -> {
