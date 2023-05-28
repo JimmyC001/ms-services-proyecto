@@ -19,9 +19,11 @@ public class ServiceService {
     public co.com.cattleya.ms.services.service.domain.model.Service findById(Long id) {
         return repository.findById(id).orElse(null);
     }
-
+    public co.com.cattleya.ms.services.service.domain.model.Service findByName(String name){
+        return repository.findByName(name).orElse(null);
+    }
     public co.com.cattleya.ms.services.service.domain.model.Service saveService(co.com.cattleya.ms.services.service.domain.model.Service service) {
-        co.com.cattleya.ms.services.service.domain.model.Service dbService = repository.findByName(service.getName());
+        co.com.cattleya.ms.services.service.domain.model.Service dbService = findByName(service.getName());
         if (dbService != null)
             return dbService;
         return repository.save(service);

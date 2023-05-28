@@ -12,19 +12,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("offer")
 public class PutOfferController {
     private final OfferService service;
-    private final PutOfferMapper mapper;
     @Autowired
     public PutOfferController(OfferService service, PutOfferMapper mapper){
         this.service = service;
-        this.mapper = mapper;
     }
     @PutMapping("{id}")
     public ResponseEntity<Offer> updateOffer(@PathVariable Long id, @RequestBody PutOfferRequest request){
-        Offer toUpdate = mapper.toOffer(request);
+        Offer toUpdate = PutOfferMapper.toOffer(request);
         if(toUpdate == null)
             return ResponseEntity.badRequest().build();
         toUpdate.setId(id);
-        //System.out.println(toUpdate);
         Offer updated = service.updateOffer(toUpdate);
         if(updated == null)
             return ResponseEntity.badRequest().build();

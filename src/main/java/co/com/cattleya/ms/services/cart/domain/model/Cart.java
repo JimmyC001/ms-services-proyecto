@@ -18,6 +18,10 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true, nullable = false)
+    private Long clientId;
+    private String status;
+    private Double price;
     @OneToMany
     private List<Offer> services;
 }

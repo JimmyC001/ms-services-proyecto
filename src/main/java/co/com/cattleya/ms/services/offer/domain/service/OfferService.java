@@ -5,8 +5,8 @@ import co.com.cattleya.ms.services.offer.domain.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OfferService {
@@ -47,14 +47,6 @@ public class OfferService {
             dbOffer.setDescription(offer.getDescription());
         if(offer.getPrice() != null)
             dbOffer.setPrice(offer.getPrice());
-        if(offer.getServices() != null && !offer.getServices().isEmpty()){
-            dbOffer.getServices().clear();
-            dbOffer.getServices().addAll(offer.getServices().stream()
-                    .filter(service ->
-                            service.getProviderId().equals(dbOffer.getProviderId())
-                    ).toList()
-            );
-        }
         return repository.save(dbOffer);
     }
     public Offer deleteOffer(Long id){
@@ -63,5 +55,26 @@ public class OfferService {
             return null;
         repository.delete(dbOffer);
         return dbOffer;
+    }
+    public Offer addServiceToOffer(Long id, co.com.cattleya.ms.services.service.domain.model.Service service){
+        Offer dbOffer = repository.findById(id).orElse(null);
+        if(dbOffer == null)
+            return null;
+        if(!service.getProviderId().equals(dbOffer.getProviderId()))
+            return null;
+        dbOffer.getServices().add(service);
+        return repository.save(dbOffer);
+    }
+    public Offer deleteServiceToOffer(Long id, Long service){
+        Offer dbOffer = repository.findById(id).orElse(null);
+        if(dbOffer == null)
+            return null;
+        Optional<co.com.cattleya.ms.services.service.domain.model.Service> founded = dbOffer.getServices().stream()
+                .filter(s -> s.getId().equals(service))
+                .findFirst();
+        if(founded.isEmpty())
+            return null;
+        dbOffer.getServices().remove(founded.get());
+        return repository.save(dbOffer);
     }
 }
