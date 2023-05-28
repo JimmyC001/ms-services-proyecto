@@ -10,7 +10,7 @@ import java.net.URL;
 
 @Service
 public class PaymentApiConsumer implements PaymentAPI {
-    private final String API_URL = "http://localhost:9000/pay";
+    private final String API_URL = "http://payment:9000/pay";
     public boolean pay(Long id, Double amount) throws IOException {
         URL url = new URL(API_URL + "/sub");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

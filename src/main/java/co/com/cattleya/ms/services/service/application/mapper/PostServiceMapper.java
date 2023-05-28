@@ -26,6 +26,7 @@ public class PostServiceMapper {
                 service = Hosting.builder()
                         .place(String.valueOf(request.getVariables().get("place")))
                         .days((Integer) request.getVariables().get("days"))
+                        .country(String.valueOf(request.getVariables().get("country")) )
                         .build();
             }
             case "TRANSPORT" -> {
