@@ -2,12 +2,15 @@ package co.com.cattleya.ms.services.service.domain.service;
 
 import co.com.cattleya.ms.services.service.domain.model.CountryInfo;
 import co.com.cattleya.ms.services.service.domain.model.MapsInfo;
+import co.com.cattleya.ms.services.service.domain.model.WeatherInfo;
 import co.com.cattleya.ms.services.service.domain.repository.ServiceRepository;
 import co.com.cattleya.ms.services.service.infrastructure.persistence.CountryServiceAPI;
 import co.com.cattleya.ms.services.service.infrastructure.persistence.MapsServiceAPI;
+import co.com.cattleya.ms.services.service.infrastructure.persistence.WeatherServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +19,14 @@ public class ServiceService {
     private final ServiceRepository repository;
     private final CountryServiceAPI repositoryCountry;
     private final MapsServiceAPI repositoryMaps;
+    private final WeatherServiceAPI repositoryWeather;
 
     @Autowired
-    public ServiceService(ServiceRepository repository, CountryServiceAPI repositoryCountry, MapsServiceAPI repositoryMaps) {
+    public ServiceService(ServiceRepository repository, CountryServiceAPI repositoryCountry, MapsServiceAPI repositoryMaps, WeatherServiceAPI repositoryWeather) {
         this.repository = repository;
         this.repositoryCountry = repositoryCountry;
         this.repositoryMaps = repositoryMaps;
+        this.repositoryWeather = repositoryWeather;
     }
 
     public CountryInfo getCountry(String countryName) throws Exception {
@@ -29,6 +34,10 @@ public class ServiceService {
     }
     public MapsInfo getMaps( String destination) throws Exception {
         return repositoryMaps.getMapsRout( destination);
+    }
+
+    public WeatherInfo getWeather ( String location) throws IOException, InterruptedException {
+        return repositoryWeather.getWeather(location);
     }
 
     public co.com.cattleya.ms.services.service.domain.model.Service findById(Long id) {

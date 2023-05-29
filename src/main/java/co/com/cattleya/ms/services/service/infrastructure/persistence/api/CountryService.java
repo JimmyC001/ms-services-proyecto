@@ -45,9 +45,6 @@ public class CountryService implements CountryServiceAPI {
                 response.append(line);
             }
             reader.close();
-
-            // Print the response
-            System.out.println("Response Body: " + response.toString());
             List<CountryInfo> countries = objectMapper.readValue(response.toString(), new TypeReference<>() {});
             // Disconnect the connection
             connection.disconnect();

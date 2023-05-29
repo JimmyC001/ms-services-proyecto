@@ -27,6 +27,7 @@ public class GetServiceController {
         List<Service> services;
         CountryInfo infoAdc;
         MapsInfo mapsInfo;
+        WeatherInfo weatherInfo;
         if (provider == null) {
             // Get all services
             services = service.getAllServices();
@@ -47,11 +48,12 @@ public class GetServiceController {
                 String countries = hosting.getCountry();
                 infoAdc = service.getCountry(countries);
                 mapsInfo = service.getMaps(place);
+                weatherInfo = service.getWeather(hosting.getCountry());
 
                 if (infoAdc == null ){
                     return ResponseEntity.badRequest().build();
                 }
-                responses.add(GetServiceMapper.toResponse(serv, infoAdc , mapsInfo));
+                responses.add(GetServiceMapper.toResponse(serv, infoAdc , mapsInfo , weatherInfo ));
             }
 
             else if (serv instanceof EcoTrip) {
@@ -62,17 +64,18 @@ public class GetServiceController {
                 if (infoAdc == null ){
                     return ResponseEntity.badRequest().build();
                 }
-                responses.add(GetServiceMapper.toResponse(serv, infoAdc , null));
+                responses.add(GetServiceMapper.toResponse(serv, infoAdc , null , null));
             }
             else if (serv instanceof Transport){
                 Transport transport = (Transport) serv;
                 String destination = transport.getDestination();
                 mapsInfo = service.getMaps( destination);
+                weatherInfo = service.getWeather(transport.getDestination());
 
                 if (mapsInfo == null ){
                     return ResponseEntity.badRequest().build();
                 }
-                responses.add(GetServiceMapper.toResponse(serv, null ,mapsInfo));
+                responses.add(GetServiceMapper.toResponse(serv, null ,mapsInfo , null));
             }
 
             else {
